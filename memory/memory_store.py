@@ -43,10 +43,26 @@ for col, sql in migrations.items():
             pass   # ignore if already exists or unsupported
 
 
-def store_solution(question, solution, feedback="",
-                   input_type="text", parsed=None,
-                   context=None, verifier_conf=0.5):
-    """Store a full interaction record."""
+def store_solution(
+    question,
+    solution,
+    feedback="",
+    input_type="text",
+    parsed=None,
+    context=None,
+    verifier_conf=0.5,
+    topic=None,
+    sources=None,
+    verifier_comment=None,
+    **kwargs
+):
+    """
+    Store a full interaction record in the SQLite DB.
+    Added fields:
+        - topic: problem classification topic
+        - sources: list of source documents
+        - verifier_comment: comment from verification step
+    """
     cursor.execute(
         """INSERT INTO history
            (input_type, question, parsed, context, solution, verifier_conf, feedback)
@@ -54,7 +70,7 @@ def store_solution(question, solution, feedback="",
         (
             input_type,
             question,
-            json.dumps(parsed  or {}),
+            json.dumps(parsed or {}),
             json.dumps(context or []),
             solution,
             verifier_conf,
