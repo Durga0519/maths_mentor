@@ -1,0 +1,9 @@
+Probability rules
+
+P(A) = favorable outcomes / total outcomes
+
+P(A ∪ B) = P(A) + P(B) − P(A ∩ B)
+
+Independent events:
+
+P(A ∩ B) = P(A) * P(B)

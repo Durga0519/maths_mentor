@@ -1,0 +1,8 @@
+Algebra formulas
+
+(a+b)^2 = a^2 + 2ab + b^2
+(a-b)^2 = a^2 - 2ab + b^2
+a^2 - b^2 = (a-b)(a+b)
+
+Volume of cube = a^3
+Volume of cuboid = l * b * h
