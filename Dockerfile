@@ -2,32 +2,31 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# System dependencies for EasyOCR, OpenCV, Whisper, and audio processing
+# System dependencies
 RUN apt-get update && apt-get install -y \
     ffmpeg \
-    libgl1-mesa-glx \
+    git \
+    wget \
+    libgl1 \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
-    libxrender-dev \
+    libxrender1 \
     libgomp1 \
-    git \
-    wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip first
-RUN pip install --upgrade pip
+# Upgrade pip
+RUN python -m pip install --upgrade pip
 
-# Install torch CPU first (easyocr depends on it)
+# Install PyTorch CPU (required for EasyOCR)
 RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
-# Install easyocr separately to ensure it works
-RUN pip install --no-cache-dir easyocr
+# Install ML / OCR libraries
+RUN pip install --no-cache-dir \
+    easyocr \
+    openai-whisper
 
-# Install openai-whisper
-RUN pip install --no-cache-dir openai-whisper
-
-# Install remaining dependencies
+# Install app dependencies
 RUN pip install --no-cache-dir \
     streamlit>=1.35 \
     langchain>=0.2 \
@@ -42,10 +41,10 @@ RUN pip install --no-cache-dir \
     requests>=2.31 \
     scikit-learn>=1.4
 
-# Copy all project files
+# Copy project
 COPY . .
 
-# Expose Streamlit port (HF Spaces requires 7860)
+# Expose port
 EXPOSE 7860
 
 ENV STREAMLIT_SERVER_PORT=7860

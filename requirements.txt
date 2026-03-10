@@ -3,6 +3,7 @@ langchain
 langgraph
 sentence-transformers
 faiss-cpu
+easyocr
 paddleocr
 opencv-python
 openai-whisper
@@ -12,7 +13,7 @@ pydantic
 numpy
 pandas
 google-generativeai
-python-dotenv
-langgraph
-sympy
 scikit-learn
+torch
+torchvision
+torchaudio
